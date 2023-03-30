@@ -157,17 +157,23 @@ public class FruitNinja extends GraphicsProgram {
 						instBall.setImage("../media/slicedwatermelon.png");
 						instBall.setSize(99,100); // By reducing the size of the object by a single pixel, its already-slashed state is stored in a memory-efficient manner without additional variables or an array of fruits.
 						scoreVal = scoreVal+50;
+						WAVplayInstance slicedPlayer = new WAVplayInstance();
+						slicedPlayer.playWAV("media/slice.wav");
 					}
 					
 					else if (instBall.getHeight()==100.001) {
 						instBall.setImage("../media/slicedcoconut.png");
 						instBall.setSize(99,100);
 						scoreVal = scoreVal+75;
+						WAVplayInstance slicedPlayer = new WAVplayInstance();
+						slicedPlayer.playWAV("media/slice.wav");
 					}
 					else if (instBall.getHeight()==100.002) {
 						instBall.setImage("../media/slicedapple.png");
 						instBall.setSize(99,100);
 						scoreVal = scoreVal+75;
+						WAVplayInstance slicedPlayer = new WAVplayInstance();
+						slicedPlayer.playWAV("media/slice.wav");
 					}
 					else if (instBall.getHeight()==100.003) {
 						instBall.setImage("../media/kaboom.png");
@@ -176,8 +182,7 @@ public class FruitNinja extends GraphicsProgram {
 					}
 					// End typeCode check
 					
-					WAVplayInstance slicedPlayer = new WAVplayInstance();
-					slicedPlayer.playWAV("media/slice.wav");
+
 					
 					currScore.setLabel("Points: " + Integer.toString(scoreVal));
 				}
