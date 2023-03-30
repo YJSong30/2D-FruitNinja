@@ -176,6 +176,9 @@ public class FruitNinja extends GraphicsProgram {
 					}
 					// End typeCode check
 					
+					WAVplayInstance slicedPlayer = new WAVplayInstance();
+					slicedPlayer.playWAV("media/slice.wav");
+					
 					currScore.setLabel("Points: " + Integer.toString(scoreVal));
 				}
 				//tossBall(instBall);
