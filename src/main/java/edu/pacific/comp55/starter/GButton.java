@@ -22,7 +22,7 @@ public class GButton extends GCompound {
 	private GRoundRect rect;
 	private GLabel message;
 
-	public static final int BUFFER = 20;
+	public static finat5t54ty54tyl int BUFFER = 20;
 
 	public GButton(String label, double x, double y, double width, double height) {
 		this(label, x, y, width, height, Color.white);
