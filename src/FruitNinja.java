@@ -14,6 +14,8 @@ import java.io.*;
  * TODO:
  * X DONE X Create additional fruit graphics, and select between them randomly X DONE X
  * X DONE X Implement bombs X DONE X
+ * X DONE X Implement background music X DONE X
+ * - Implement additional sound effects
  * - Implement penalties
  * - Improve blade graphics (?)
  * - Allow additional fruits to be spawned if all existing fruits have been slashed (classic) and/or missed (arcade)
@@ -61,6 +63,7 @@ public class FruitNinja extends GraphicsProgram {
 			System.out.println(fallHeight);
 			int typeSelector = (rgen.nextInt(0,3));
 			String fruitType;
+			//Begin fruit typeCode selector
 			double typeCode;
 			if (typeSelector == 0) {
 				fruitType = "watermelon";
@@ -78,6 +81,7 @@ public class FruitNinja extends GraphicsProgram {
 				fruitType = "bomb";
 				typeCode = 100.003;
 			}
+			//End fruit typeCode selector
 			ball = new GImage("../media/whole" + fruitType + ".png", fallWidth, WINDOW_HEIGHT-fallHeight);
 			ball.setSize(100,typeCode);
 			add(ball);
@@ -117,37 +121,19 @@ public class FruitNinja extends GraphicsProgram {
 	private void animateBall(int gravityMult) {
 		while(true) {
 			for (GImage ballInstance:myBalls) {
-				//int fallVelocity = rgen.nextInt(50,150);
 				ballInstance.move(xVelocity, gravityMult);
 				if(windageBounceCheck(ballInstance)) {
 					xVelocity *= -1;
 				}
-				//GOval nullBall = new GOval(0,0);
-				//trailOfBalls.add(nullBall);
-				//trailCount.setLabel(Integer.toString(trailOfBalls.size()));
 				pause(1);
 				remove(ballBlade);
 			}
 		}
 	}
-	/*
-	private void tossBall(GImage flyingBall) {
-		flyingBall.setLocation(WINDOW_WIDTH/2, WINDOW_HEIGHT-flyingBall.getHeight()*-2);
-		while(true) {
-			flyingBall.move(rgen.nextDouble(5,15), rgen.nextInt(1,5));
-		}
-	}
-	*/
+
 	@Override
 	public void mousePressed(MouseEvent e) {
-		/*for(GImage instBall:myBalls) {
-			if(getElementAt(e.getX(), e.getY()) == instBall) {
-				instBall.setColor(rgen.nextColor());
-			}
-			else {
-				instBall.setLocation(instBall.getX(),e.getY()-50);
-			}
-		}*/
+		//Nothing for now.
 	}
 	
 	public void drawBlade(int curX, int curY) {
@@ -155,10 +141,7 @@ public class FruitNinja extends GraphicsProgram {
 		add(ballBlade);
 
 	}
-	
-	//@Override
-	//public boolean GImage.sliced = false;
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		for(GImage instBall:myBalls) {
@@ -169,7 +152,7 @@ public class FruitNinja extends GraphicsProgram {
 					
 				}
 				else {
-					// Begin TypeCode check
+					// Begin typeCode check
 					if (instBall.getHeight()==100.000) {
 						instBall.setImage("../media/slicedwatermelon.png");
 						instBall.setSize(99,100); // By reducing the size of the object by a single pixel, its already-slashed state is stored in a memory-efficient manner without additional variables or an array of fruits.
@@ -178,12 +161,12 @@ public class FruitNinja extends GraphicsProgram {
 					
 					else if (instBall.getHeight()==100.001) {
 						instBall.setImage("../media/slicedcoconut.png");
-						instBall.setSize(99,100); // By reducing the size of the object by a single pixel, its already-slashed state is stored in a memory-efficient manner without additional variables or an array of fruits.
+						instBall.setSize(99,100);
 						scoreVal = scoreVal+75;
 					}
 					else if (instBall.getHeight()==100.002) {
 						instBall.setImage("../media/slicedapple.png");
-						instBall.setSize(99,100); // By reducing the size of the object by a single pixel, its already-slashed state is stored in a memory-efficient manner without additional variables or an array of fruits.
+						instBall.setSize(99,100);
 						scoreVal = scoreVal+75;
 					}
 					else if (instBall.getHeight()==100.003) {
@@ -191,7 +174,7 @@ public class FruitNinja extends GraphicsProgram {
 						instBall.setSize(99,100);
 						scoreVal = scoreVal-150;
 					}
-					// End TypeCode check
+					// End typeCode check
 					
 					currScore.setLabel("Points: " + Integer.toString(scoreVal));
 				}
@@ -204,26 +187,6 @@ public class FruitNinja extends GraphicsProgram {
 			}
 		}
 	}
-	/*
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		System.out.println("Mouse moved!");
-		for (GOval instanceBall:myBalls) {
-			if(getElementAt(e.getX(), e.getY()) == instanceBall) {
-				System.out.println("Mouse moved over ball!");
-			}
-			else {
-			
-			}
-		}
-	}
-	*/
-	/*
-	 @Override
-	 public void mouseReleased(MouseEvent e) {
-	  tossBall(instBall);
-	 }
-	 */
 	
 	private boolean windageBounceCheck(GImage ballInstance) {
 		double x = ballInstance.getX();
