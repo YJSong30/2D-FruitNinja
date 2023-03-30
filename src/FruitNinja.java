@@ -119,7 +119,7 @@ public class FruitNinja extends GraphicsProgram {
 			for (GImage ballInstance:myBalls) {
 				//int fallVelocity = rgen.nextInt(50,150);
 				ballInstance.move(xVelocity, gravityMult);
-				if(outOfBounds(ballInstance)) {
+				if(windageBounceCheck(ballInstance)) {
 					xVelocity *= -1;
 				}
 				//GOval nullBall = new GOval(0,0);
@@ -225,7 +225,7 @@ public class FruitNinja extends GraphicsProgram {
 	 }
 	 */
 	
-	private boolean outOfBounds(GImage ballInstance) {
+	private boolean windageBounceCheck(GImage ballInstance) {
 		double x = ballInstance.getX();
 		return (x < 0 && xVelocity < 0 || x > WINDOW_WIDTH-100 && xVelocity > 0);
 	}
