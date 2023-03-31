@@ -180,7 +180,7 @@ public class FruitNinja extends GraphicsProgram {
 						instBall.setSize(99,100);
 						scoreVal = scoreVal-150;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
-						slicedPlayer.playWAV("media/bang.wav");
+						slicedPlayer.playWAV("media/bang.wav"); //Test
 					}
 					// End typeCode check
 					
