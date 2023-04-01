@@ -56,7 +56,8 @@ public class FruitNinja extends GraphicsProgram {
 		
 		String BGMpath = "media/bgm-arcade.wav";
 		WAVplayInstance BGMplayer = new WAVplayInstance();
-		BGMplayer.playWAV(BGMpath);
+		
+		BGMplayer.playWAV(BGMpath, true);
 		
 		GImage dojoBackground = new GImage("../media/dojo.jpg");
 		add(dojoBackground);
@@ -86,13 +87,19 @@ public class FruitNinja extends GraphicsProgram {
 	}
 
 	class WAVplayInstance {
-	        void playWAV(String WAVpath){
+	        void playWAV(String WAVpath, boolean loopState){
 	                 try {
 	                         File pathString = new File(WAVpath);
 	                          if(pathString.exists()){ 
 	                                  AudioInputStream WAVstream = AudioSystem.getAudioInputStream(pathString);
 	                                  Clip tempIn = AudioSystem.getClip();
 	                                  tempIn.open(WAVstream);
+	                                  if (loopState==false) {
+	                                	  
+	                                  }
+	                                  else {
+	                                	  tempIn.loop(Clip.LOOP_CONTINUOUSLY);
+	                                  }
 	                                  tempIn.start();
 
 	                           }
@@ -170,7 +177,9 @@ public class FruitNinja extends GraphicsProgram {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		for(GImage instFruit:myBalls) {
+		int ballsSize = myBalls.size();
+		for (int i = ballsSize-1; i>=0; i--) {
+			GImage instFruit = myBalls.get(i);
 			//System.out.println("Mouse dragged!");
 			drawBlade(e.getX(), e.getY());
 			if(getElementAt(e.getX(), e.getY()) == instFruit) {
@@ -184,7 +193,7 @@ public class FruitNinja extends GraphicsProgram {
 						instFruit.setSize(99,100.000); // By reducing the size of the object by a single pixel, its already-slashed state is stored in a memory-efficient manner without additional variables or an array of fruits.
 						scoreVal = scoreVal+50;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
-						slicedPlayer.playWAV("media/slice.wav");
+						slicedPlayer.playWAV("media/slice.wav", false);
 					}
 					
 					else if (instFruit.getHeight()==100.001) {
@@ -192,21 +201,21 @@ public class FruitNinja extends GraphicsProgram {
 						instFruit.setSize(99,100.001);
 						scoreVal = scoreVal+75;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
-						slicedPlayer.playWAV("media/slice.wav");
+						slicedPlayer.playWAV("media/slice.wav", false);
 					}
 					else if (instFruit.getHeight()==100.002) {
 						instFruit.setImage("../media/slicedapple.png");
 						instFruit.setSize(99,100.002);
 						scoreVal = scoreVal+75;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
-						slicedPlayer.playWAV("media/slice.wav");
+						slicedPlayer.playWAV("media/slice.wav", false);
 					}
 					else if (instFruit.getHeight()==100.003) {
 						instFruit.setImage("../media/kaboom.png");
 						instFruit.setSize(99,100.003);
 						scoreVal = scoreVal-150;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
-						slicedPlayer.playWAV("media/bang.wav");
+						slicedPlayer.playWAV("media/bang.wav", false);
 					}
 					// End typeCode check
 					
