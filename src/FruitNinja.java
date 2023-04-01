@@ -43,7 +43,6 @@ public class FruitNinja extends GraphicsProgram {
 	int k = 0;
 	
 	
-	
 	public void run() {
 		ballBlade.setColor(Color.CYAN);
 		ballBlade.setFilled(true);
