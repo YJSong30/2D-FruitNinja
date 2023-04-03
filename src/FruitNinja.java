@@ -4,6 +4,8 @@ import acm.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -28,9 +30,9 @@ public class FruitNinja extends GraphicsProgram {
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int BALL_SIZE = 100;
 	public static final int BREAK_MS = 30;
-	public static int WINDAGE = 15; // Determines the strength of wind in the dojo
+	public static int WINDAGE = 7; // Determines the strength of wind in the dojo
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits
-	public static int GRAVITY_MULTIPLIER = 25; // Determines the strength of gravity in the dojo
+	public static int GRAVITY_MULTIPLIER = 12; // Determines the strength of gravity in the dojo
 	
 	ArrayList<GImage> myBalls = new ArrayList<GImage>();
 	//ArrayList<GOval> trailOfBalls = new ArrayList<GOval>();
@@ -44,6 +46,8 @@ public class FruitNinja extends GraphicsProgram {
 	private RandomGenerator rgen;
 	//ArrayList<GOval> balls;
 	int k = 0;
+	
+	private LaunchPage launchPage;
 	
 	
 	public void run() {
@@ -64,8 +68,7 @@ public class FruitNinja extends GraphicsProgram {
 		for (i=0; i<NUM_BALLS; i++) {
 			generateNewFruit();
 		}
-		
-
+	
 		
 		try { //Attempt to register custom font from TrueType file in media directory
 		     GraphicsEnvironment tempEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -78,11 +81,36 @@ public class FruitNinja extends GraphicsProgram {
 		currScore.setColor(Color.ORANGE);
 		add(currScore);
         addMouseListeners();
-		
-        for (GImage ballInstance:myBalls) {
-        	animateFruit(GRAVITY_MULTIPLIER); // Set the gravity of my balls.
-        }
         
+        new Thread(() -> {
+            while (true) {
+                animateAllFruits(GRAVITY_MULTIPLIER);
+                pause(BREAK_MS); 
+            }
+        }).start();
+        
+//        for (GImage ballInstance:myBalls) { 
+//        	animateFruit(GRAVITY_MULTIPLIER, ballInstance); // Set the gravity of my balls.
+//        }
+
+        
+	}
+	
+	private void animateAllFruits(int gravityMult) {
+	    synchronized (myBalls) {
+	        for (int i = myBalls.size() - 1; i >= 0; i--) {
+	            GImage ballInstance = myBalls.get(i);
+	            animateFruit(GRAVITY_MULTIPLIER, ballInstance);
+	            if (!fruitBoundaryCheck(ballInstance)) {
+	                remove(ballInstance);
+	                myBalls.remove(i); // Remove the current ballInstance by index
+	                generateNewFruit(); // Generates a new fruit to ensure that the user never "runs out" of fruits.
+	            }
+	            if (windageBounceCheck(ballInstance)) {
+	                xVelocity *= -1;
+	            }
+	        }
+	    }
 	}
 
 	class WAVplayInstance {
@@ -143,30 +171,22 @@ public class FruitNinja extends GraphicsProgram {
 		myBalls.add(ball);
 	}
 	
-	private void animateFruit(int gravityMult) {
-		while(true) {
-			int ballsSize = myBalls.size();
-			for (int i = ballsSize-1; i>=0; i--) { //Reverse 'for' loop to permit the deletion of objects from the actively-traversed ArrayList "myBalls".
-				GImage ballInstance = myBalls.get(i);
-				ballInstance.move(xVelocity, gravityMult);
-				if (!fruitBoundaryCheck(ballInstance)) {
-					remove(ballInstance);
-					myBalls.remove(ballInstance); //Memory management.
-					generateNewFruit(); //Generates a new fruit to ensure that the user never "runs out" of fruits.
-				}
-				if(windageBounceCheck(ballInstance)) {
-					xVelocity *= -1;
-				}
-				pause(1);
-				remove(ballBlade);
-			}
-		}
+	private void animateFruit(int gravityMult, GImage ballInst) { //modify this function
+		 ballInst.move(xVelocity, gravityMult);
 	}
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		//Nothing for now.
 	}
+	
+//	@Override
+//	    public void mouseClicked(MouseEvent e) {
+//	        for (GImage ballInstance : myBalls) {
+//	            animateFruit(GRAVITY_MULTIPLIER, ballInstance);
+//	        }
+//	    }
 	
 	public void drawBlade(int curX, int curY) {
 		ballBlade.setLocation(curX-15, curY);
@@ -176,6 +196,7 @@ public class FruitNinja extends GraphicsProgram {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		System.out.println("Click");
 		int ballsSize = myBalls.size();
 		for (int i = ballsSize-1; i>=0; i--) {
 			GImage instFruit = myBalls.get(i);
@@ -252,7 +273,8 @@ public class FruitNinja extends GraphicsProgram {
 	}
 	
 	public static void main(String[] args) {
-
-		new FruitNinja().start();
+		
+		LaunchPage launchPage = new LaunchPage();
+		
 	}
 }
