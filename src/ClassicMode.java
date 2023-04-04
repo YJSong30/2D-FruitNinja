@@ -31,12 +31,14 @@ public class ClassicMode extends GraphicsProgram {
 	public static final int BREAK_MS = 30;
 	public static int WINDAGE = 4; // Determines the strength of wind in the dojo
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits
-	public static int GRAVITY_MULTIPLIER = 12; // Determines the strength of gravity in the dojo
+	public static int GRAVITY_MULTIPLIER = 8; // Determines the strength of gravity in the dojo
+	public boolean gameActive = true;
 	
 	ArrayList<GImage> myBalls = new ArrayList<GImage>();
 	//ArrayList<GOval> trailOfBalls = new ArrayList<GOval>();
 	GLabel currScore = new GLabel("Points: 0", 10, 25);
 	int scoreVal = 0;
+	int penaltiesVal = 0;
 	GOval ballBlade = new GOval(0, 0, 20, 20);
 
 	
@@ -45,6 +47,9 @@ public class ClassicMode extends GraphicsProgram {
 	private RandomGenerator rgen;
 	//ArrayList<GOval> balls;
 	int k = 0;
+	String BGMpath = "media/bgm-classic.wav";
+	WAVplayInstance BGMplayer = new WAVplayInstance();
+	
 	
 	private LaunchPage launchPage;
 	
@@ -56,9 +61,7 @@ public class ClassicMode extends GraphicsProgram {
 		rgen = RandomGenerator.getInstance();
 		xVelocity = WINDAGE;
 		
-		String BGMpath = "media/bgm-arcade.wav";
-		WAVplayInstance BGMplayer = new WAVplayInstance();
-		
+
 		BGMplayer.playWAV(BGMpath, true);
 		
 		GImage dojoBackground = new GImage("../media/dojo.jpg");
@@ -82,7 +85,7 @@ public class ClassicMode extends GraphicsProgram {
         addMouseListeners();
         
         new Thread(() -> {
-            while (true) {
+            while (gameActive==true) {
                 animateAllFruits(GRAVITY_MULTIPLIER);
                 remove(ballBlade);
                 pause(BREAK_MS); 
@@ -107,34 +110,45 @@ public class ClassicMode extends GraphicsProgram {
 	            }
 	        }
 	    }
+	    if (penaltiesVal > 2) {
+	    	gameOver();
+	    }
 	}
 
 	class WAVplayInstance {
-	        void playWAV(String WAVpath, boolean loopState){
-	                 try {
-	                         File pathString = new File(WAVpath);
-	                          if(pathString.exists()){ 
-	                                  AudioInputStream WAVstream = AudioSystem.getAudioInputStream(pathString);
-	                                  Clip tempIn = AudioSystem.getClip();
-	                                  tempIn.open(WAVstream);
-	                                  if (loopState==false) {
-	                                	  
-	                                  }
-	                                  else {
-	                                	  tempIn.loop(Clip.LOOP_CONTINUOUSLY);
-	                                  }
-	                                  tempIn.start();
+		Clip tempIn;
+		
+        void playWAV(String WAVpath, boolean loopState){
+                 try {
+                         File pathString = new File(WAVpath);
+                          if(pathString.exists()){ 
+                                  AudioInputStream WAVstream = AudioSystem.getAudioInputStream(pathString);
+                                  tempIn = AudioSystem.getClip();
+                                  tempIn.open(WAVstream);
+                                  if (loopState==false) {
+                                	  
+                                  }
+                                  else {
+                                	  tempIn.loop(Clip.LOOP_CONTINUOUSLY);
+                                  }
+                                  tempIn.start();
 
-	                           }
-	                          else{
-	                                   System.out.println("WAV path nonexistent!");
-	                                }
-	                }
-	                catch (Exception e){
-	                           System.out.println(e);
-	                     }
-	           }
-	}
+                           }
+                          else{
+                                   System.out.println("WAV path nonexistent!");
+                                }
+                }
+                catch (Exception e){
+                           System.out.println(e);
+                     }
+           }
+        
+        void stopWAV() {
+        	if (tempIn != null) {
+        		tempIn.stop();
+        	}
+        }
+}
 
 	private void generateNewFruit() {
 		int fallHeight = (rgen.nextInt(1000,10000)); // Random selection of the coordinates at which each fruit spawns, so that they do not all appear on screen at once.
@@ -177,12 +191,23 @@ public class ClassicMode extends GraphicsProgram {
 		//Nothing for now.
 	}
 	
-//	@Override
-//	    public void mouseClicked(MouseEvent e) {
-//	        for (GImage ballInstance : myBalls) {
-//	            animateFruit(GRAVITY_MULTIPLIER, ballInstance);
-//	        }
-//	    }
+	
+	private void gameOver() {
+        for (int i = myBalls.size() - 2; i >= 0; i--) {
+            GImage ballInstance = myBalls.get(i);
+            remove(ballInstance);
+            myBalls.remove(i); // Remove the current ballInstance by index
+        }
+        Font ninjaFont = new Font("Gang of Three", Font.PLAIN, 44);
+        GLabel lblGameOver = new GLabel("Game over!", WINDOW_HEIGHT/2, WINDOW_WIDTH/3);
+        lblGameOver.setFont(ninjaFont);
+        lblGameOver.setColor(Color.RED);
+        add(lblGameOver);
+        currScore.setLocation(WINDOW_HEIGHT/2, WINDOW_WIDTH/2.5);
+        BGMplayer.stopWAV();
+        BGMplayer.playWAV("media/gameover.wav", false);
+        gameActive=false;
+	}
 	
 	public void drawBlade(int curX, int curY) {
 		ballBlade.setLocation(curX-15, curY);
@@ -192,7 +217,7 @@ public class ClassicMode extends GraphicsProgram {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("Click");
+		//System.out.println("Click");
 		int ballsSize = myBalls.size();
 		for (int i = ballsSize-1; i>=0; i--) {
 			GImage instFruit = myBalls.get(i);
@@ -232,12 +257,13 @@ public class ClassicMode extends GraphicsProgram {
 						scoreVal = scoreVal-150;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/bang.wav", false);
+						penaltiesVal++;
 					}
 					// End typeCode check
 					
 
 					
-					currScore.setLabel("Points: " + Integer.toString(scoreVal));
+					currScore.setLabel("Points: " + Integer.toString(scoreVal) + ", Penalties: " + Integer.toString(penaltiesVal));
 				}
 				//tossBall(instBall);
 				//System.out.println("Mouse dragged over ball!");

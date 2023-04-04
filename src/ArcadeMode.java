@@ -177,13 +177,6 @@ public class ArcadeMode extends GraphicsProgram {
 		//Nothing for now.
 	}
 	
-//	@Override
-//	    public void mouseClicked(MouseEvent e) {
-//	        for (GImage ballInstance : myBalls) {
-//	            animateFruit(GRAVITY_MULTIPLIER, ballInstance);
-//	        }
-//	    }
-	
 	public void drawBlade(int curX, int curY) {
 		ballBlade.setLocation(curX-15, curY);
 		add(ballBlade);
@@ -192,7 +185,7 @@ public class ArcadeMode extends GraphicsProgram {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("Click");
+		//System.out.println("Click");
 		int ballsSize = myBalls.size();
 		for (int i = ballsSize-1; i>=0; i--) {
 			GImage instFruit = myBalls.get(i);
