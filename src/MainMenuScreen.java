@@ -10,12 +10,12 @@ import acm.program.Program;
 	
 	public class MainMenuScreen extends GCanvas implements MouseListener {
 		
-		private FruitNinja fruitNinja;
+		private ArcadeMode fruitNinja;
 		private GLabel clicktoplayText;
 		private GRect playButton;
 		
 		
-		public MainMenuScreen(FruitNinja fruitNinja) {
+		public MainMenuScreen(ArcadeMode fruitNinja) {
 			this.fruitNinja = fruitNinja;
 		
 			

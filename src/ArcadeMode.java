@@ -25,7 +25,7 @@ import java.io.*;
  * etc.
  */
 
-public class FruitNinja extends GraphicsProgram {
+public class ArcadeMode extends GraphicsProgram {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int BALL_SIZE = 100;

@@ -74,7 +74,7 @@ public class LaunchPage implements ActionListener{
 		if (e.getSource() == myButton) {
 			BGMplayer.stopWAV();
 			frame.dispose();
-			new FruitNinja().start();
+			new ArcadeMode().start();
 			
 		}
 		
