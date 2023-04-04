@@ -28,7 +28,6 @@ import java.io.*;
 public class ArcadeMode extends GraphicsProgram {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
-	public static final int BALL_SIZE = 100;
 	public static final int BREAK_MS = 30;
 	public static int WINDAGE = 7; // Determines the strength of wind in the dojo
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits

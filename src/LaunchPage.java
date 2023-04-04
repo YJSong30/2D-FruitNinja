@@ -12,20 +12,26 @@ import javax.swing.JFrame;
 public class LaunchPage implements ActionListener{
 	
 	JFrame frame = new JFrame();
-	JButton myButton = new JButton("CLICK TO PLAY");
-	String BGMpath = "media/Maplestory Theme Music - Intro.wav";
+	JButton btnArcade = new JButton("Arcade Mode");
+	JButton btnClassic = new JButton ("Classic Mode"); 
+	String BGMpath = "media/bgm-mainmenu.wav";
 	WAVplayInstance BGMplayer = new WAVplayInstance();
 	
 	LaunchPage(){
 
 		BGMplayer.playWAV(BGMpath, true);
 		
-		myButton.setBounds(300, 400, 200, 40);
-		myButton.setFocusable(false);
-		myButton.addActionListener(this);
+		btnArcade.setBounds(300, 400, 200, 40);
+		btnArcade.setFocusable(false);
+		btnArcade.addActionListener(this);
+		
+		btnClassic.setBounds(75, 400, 200, 40);
+		btnClassic.setFocusable(false);
+		btnClassic.addActionListener(this);
 		
 		
-		frame.add(myButton);
+		frame.add(btnArcade);
+		frame.add(btnClassic);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setLayout(null);
@@ -71,11 +77,16 @@ public class LaunchPage implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() == myButton) {
+		if (e.getSource() == btnArcade) {
 			BGMplayer.stopWAV();
 			frame.dispose();
 			new ArcadeMode().start();
 			
+		}
+		else if (e.getSource() == btnClassic) {
+			BGMplayer.stopWAV();
+			frame.dispose();
+			new ClassicMode().start();
 		}
 		
 	}
