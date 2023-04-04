@@ -276,5 +276,6 @@ public class FruitNinja extends GraphicsProgram {
 		
 		LaunchPage launchPage = new LaunchPage();
 		
+		
 	}
 }

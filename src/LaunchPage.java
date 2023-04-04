@@ -12,14 +12,12 @@ import javax.swing.JFrame;
 public class LaunchPage implements ActionListener{
 	
 	JFrame frame = new JFrame();
-	JButton myButton = new JButton("Click To Play");
-	
+	JButton myButton = new JButton("CLICK TO PLAY");
+	String BGMpath = "media/Maplestory Theme Music - Intro.wav";
+	WAVplayInstance BGMplayer = new WAVplayInstance();
 	
 	LaunchPage(){
-		
-		String BGMpath = "media/Maplestory Theme Music - Intro.wav";
-		WAVplayInstance BGMplayer = new WAVplayInstance();
-		
+
 		BGMplayer.playWAV(BGMpath, true);
 		
 		myButton.setBounds(300, 400, 200, 40);
@@ -33,16 +31,17 @@ public class LaunchPage implements ActionListener{
 		frame.setLayout(null);
 		frame.setVisible(true);
 		
-		
 	}
 	
 	class WAVplayInstance {
+		Clip tempIn;
+		
         void playWAV(String WAVpath, boolean loopState){
                  try {
                          File pathString = new File(WAVpath);
                           if(pathString.exists()){ 
                                   AudioInputStream WAVstream = AudioSystem.getAudioInputStream(pathString);
-                                  Clip tempIn = AudioSystem.getClip();
+                                  tempIn = AudioSystem.getClip();
                                   tempIn.open(WAVstream);
                                   if (loopState==false) {
                                 	  
@@ -61,14 +60,22 @@ public class LaunchPage implements ActionListener{
                            System.out.println(e);
                      }
            }
+        
+        void stopWAV() {
+        	if (tempIn != null) {
+        		tempIn.stop();
+        	}
+        }
 }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == myButton) {
+			BGMplayer.stopWAV();
 			frame.dispose();
 			new FruitNinja().start();
+			
 		}
 		
 	}
