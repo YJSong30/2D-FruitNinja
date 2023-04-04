@@ -90,10 +90,6 @@ public class FruitNinja extends GraphicsProgram {
             }
         }).start();
         
-//        for (GImage ballInstance:myBalls) { 
-//        	animateFruit(GRAVITY_MULTIPLIER, ballInstance); // Set the gravity of my balls.
-//        }
-
         
 	}
 	
