@@ -47,7 +47,6 @@ public class FruitNinja extends GraphicsProgram {
 	//ArrayList<GOval> balls;
 	int k = 0;
 	
-	private LaunchPage launchPage;
 	
 	
 	public void run() {
@@ -275,7 +274,6 @@ public class FruitNinja extends GraphicsProgram {
 	public static void main(String[] args) {
 		
 		LaunchPage launchPage = new LaunchPage();
-		
 		
 	}
 }
