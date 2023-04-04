@@ -85,6 +85,7 @@ public class FruitNinja extends GraphicsProgram {
         new Thread(() -> {
             while (true) {
                 animateAllFruits(GRAVITY_MULTIPLIER);
+                remove(ballBlade);
                 pause(BREAK_MS); 
             }
         }).start();
