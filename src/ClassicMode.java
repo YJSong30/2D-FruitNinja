@@ -102,6 +102,14 @@ public class ClassicMode extends GraphicsProgram {
 	            animateFruit(GRAVITY_MULTIPLIER, ballInstance);
 	            if (!fruitBoundaryCheck(ballInstance)) {
 	                remove(ballInstance);
+	                if (!fallenFruitCheck(ballInstance)) {
+	                	if (ballInstance.getHeight()==100.003||ballInstance.getWidth()==99) {
+	                	
+	                	}
+	                	else {
+	                		penaltiesVal++;
+	               		}
+	                }
 	                myBalls.remove(i); // Remove the current ballInstance by index
 	                generateNewFruit(); // Generates a new fruit to ensure that the user never "runs out" of fruits.
 	            }
@@ -110,6 +118,7 @@ public class ClassicMode extends GraphicsProgram {
 	            }
 	        }
 	    }
+	    currScore.setLabel("Points: " + Integer.toString(scoreVal) + ", Penalties: " + Integer.toString(penaltiesVal));
 	    if (penaltiesVal > 2) {
 	    	gameOver();
 	    }
@@ -220,6 +229,7 @@ public class ClassicMode extends GraphicsProgram {
 		//System.out.println("Click");
 		int ballsSize = myBalls.size();
 		for (int i = ballsSize-1; i>=0; i--) {
+			try {
 			GImage instFruit = myBalls.get(i);
 			//System.out.println("Mouse dragged!");
 			drawBlade(e.getX(), e.getY());
@@ -273,10 +283,24 @@ public class ClassicMode extends GraphicsProgram {
 			
 			}
 		}
+		
+		catch (IndexOutOfBoundsException as ) {
+			// Ignore false error
+		}
+		}
 	}
 	
 	private boolean fruitBoundaryCheck(GImage ballInstance) {
 		if (ballInstance.getX()>=WINDOW_WIDTH||ballInstance.getY()>=WINDOW_HEIGHT) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	private boolean fallenFruitCheck(GImage ballInstance) {
+		if (ballInstance.getY()>=WINDOW_HEIGHT) {
 			return false;
 		}
 		else {
