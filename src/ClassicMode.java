@@ -20,7 +20,7 @@ import java.io.*;
  * X DONE X Implement additional sound effects X DONE X
  * X DONE X Implement penalties
  * - Improve blade graphics (?)
- * - Allow additional fruits to be spawned if all existing fruits have been slashed (classic) and/or missed (arcade)
+ * X DONE X Allow additional fruits to be spawned if all existing fruits have been slashed (classic) and/or missed (arcade)
  * - Optimize
  * etc.
  */
