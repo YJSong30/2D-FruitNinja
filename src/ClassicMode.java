@@ -82,6 +82,7 @@ public class ClassicMode extends GraphicsProgram {
 		currScore.setFont(ninjaFont);
 		currScore.setColor(Color.ORANGE);
 		add(currScore);
+		
         addMouseListeners();
         
         new Thread(() -> {
@@ -194,7 +195,7 @@ public class ClassicMode extends GraphicsProgram {
 		 ballInst.move(xVelocity, gravityMult);
 	}
 	
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		//Nothing for now.
@@ -216,6 +217,9 @@ public class ClassicMode extends GraphicsProgram {
         BGMplayer.stopWAV();
         BGMplayer.playWAV("media/gameover.wav", false);
         gameActive=false;
+        pause(5000);
+        LaunchPage launchPage = new LaunchPage();
+        ClassicMode.super.gw.dispose();
 	}
 	
 	public void drawBlade(int curX, int curY) {
