@@ -50,7 +50,7 @@ public class ArcadeMode extends GraphicsProgram {
 	
 	
 	public void run() {
-		ballBlade.setColor(Color.CYAN);
+		ballBlade.setColor(Color.WHITE);
 		ballBlade.setFilled(true);
 		int i = 0;
 		rgen = RandomGenerator.getInstance();
