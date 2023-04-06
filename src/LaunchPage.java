@@ -21,11 +21,11 @@ public class LaunchPage implements ActionListener{
 
 		BGMplayer.playWAV(BGMpath, true);
 		
-		btnArcade.setBounds(300, 400, 200, 40);
+		btnArcade.setBounds(450, 400, 200, 40);
 		btnArcade.setFocusable(false);
 		btnArcade.addActionListener(this);
 		
-		btnClassic.setBounds(75, 400, 200, 40);
+		btnClassic.setBounds(150, 400, 200, 40);
 		btnClassic.setFocusable(false);
 		btnClassic.addActionListener(this);
 		
