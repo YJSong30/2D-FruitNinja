@@ -55,7 +55,7 @@ public class ClassicMode extends GraphicsProgram {
 	
 	
 	public void run() {
-		ballBlade.setColor(Color.CYAN);
+		ballBlade.setColor(Color.WHITE); // changed color to white
 		ballBlade.setFilled(true);
 		int i = 0;
 		rgen = RandomGenerator.getInstance();
