@@ -201,7 +201,7 @@ public class ClassicMode extends GraphicsProgram {
         Font ninjaFont = new Font("Gang of Three", Font.PLAIN, 44);
         GLabel lblGameOver = new GLabel("Game over!", WINDOW_HEIGHT/2, WINDOW_WIDTH/3);
         lblGameOver.setFont(ninjaFont);
-        lblGameOver.setColor(Color.RED);
+        lblGameOver.setColor(Color.CYAN);//changed  color
         add(lblGameOver);
         currScore.setLocation(WINDOW_HEIGHT/2, WINDOW_WIDTH/2.5);
         BGMplayer.stopWAV();
