@@ -29,10 +29,13 @@ public class ClassicMode extends GraphicsProgram {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int BREAK_MS = 30;
-	public static int WINDAGE = 4; // Determines the strength of wind in the dojo
+	public int WINDAGE = 9; // Determines the strength of wind in the dojo
+	// ^ 4 = baby, 7 = normal, 10 = extreme
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits
-	public static int GRAVITY_MULTIPLIER = 8; // Determines the strength of gravity in the dojo
-	public boolean gameActive = true;
+	public int GRAVITY_MULTIPLIER = 18; // Determines the strength of gravity in the dojo
+	// ^ 10 = baby, 12 = normal, 18 = extreme 
+	public int PAR = 3;
+	public boolean gameActive = false;
 	
 	ArrayList<GImage> myBalls = new ArrayList<GImage>();
 	//ArrayList<GOval> trailOfBalls = new ArrayList<GOval>();
@@ -47,43 +50,68 @@ public class ClassicMode extends GraphicsProgram {
 	private RandomGenerator rgen;
 	//ArrayList<GOval> balls;
 	int k = 0;
-	String BGMpath = "media/bgm-classic.wav";
 	WAVplayInstance BGMplayer = new WAVplayInstance();
 	
 	
 	private LaunchPage launchPage;
 	
+	GLabel selectDifficulty = new GLabel("Select difficulty:", 215, 125);
+	GImage btnBaby = new GImage("../media/baby.png");
+	GImage btnNormal = new GImage("../media/normal.png");
+	GImage btnExtreme = new GImage("../media/extreme.png");
 	
 	public void run() {
-		ballBlade.setColor(Color.WHITE); // changed color to white
-		ballBlade.setFilled(true);
-		int i = 0;
-		rgen = RandomGenerator.getInstance();
-		xVelocity = WINDAGE;
-		
-
-		BGMplayer.playWAV(BGMpath, true);
-		
-		GImage dojoBackground = new GImage("../media/dojo.jpg");
-		add(dojoBackground);
-		
-		for (i=0; i<NUM_BALLS; i++) {
-			generateNewFruit();
-		}
-	
-		
 		try { //Attempt to register custom font from TrueType file in media directory
 		     GraphicsEnvironment tempEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		     tempEnv.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("media/fruitninja.ttf")));
 		} catch (IOException|FontFormatException e) {
 		     System.out.println(e);
 		}
+		Font ninjaFont = new Font("Gang of Three", Font.PLAIN, 44);
+		selectDifficulty.setFont(ninjaFont);
+		selectDifficulty.setColor(Color.CYAN);
+		add(selectDifficulty);
+		btnBaby.setLocation(200, 150);
+		add(btnBaby);
+		btnNormal.setLocation(200, 275);
+		add(btnNormal);
+		btnExtreme.setLocation(200, 400);
+		add(btnExtreme);
+		ballBlade.setColor(Color.WHITE); // changed color to white
+		ballBlade.setFilled(true);
+		
+		rgen = RandomGenerator.getInstance();
+		
+	
+		
+		GImage dojoBackground = new GImage("../media/dojo.jpg");
+		add(dojoBackground);
+		dojoBackground.sendToBack();
+        addMouseListeners();
+
+	}
+	
+	public void startGame(int diffWind, int diffGrav, int diffPar, String diffBGM) {
+		remove(selectDifficulty);
+		remove(btnBaby);
+		remove(btnNormal);
+		remove(btnExtreme);
+		WINDAGE = diffWind;
+		GRAVITY_MULTIPLIER = diffGrav;
+		PAR = diffPar;
+		
+		int i = 0;
+		for (i=0; i<NUM_BALLS; i++) {
+			generateNewFruit();
+		}
+	
+		
 		Font ninjaFont = new Font("Gang of Three", Font.PLAIN, 33);
 		currScore.setFont(ninjaFont);
 		currScore.setColor(Color.ORANGE);
 		add(currScore);
 		
-        addMouseListeners();
+		xVelocity = WINDAGE;
         
         new Thread(() -> {
             while (gameActive==true) {
@@ -92,8 +120,8 @@ public class ClassicMode extends GraphicsProgram {
                 pause(BREAK_MS); 
             }
         }).start();
-        
-        
+        String BGMpath = "media/bgm-" + diffBGM + ".wav";
+		BGMplayer.playWAV(BGMpath, true);
 	}
 	
 	private void animateAllFruits(int gravityMult) {
@@ -120,7 +148,7 @@ public class ClassicMode extends GraphicsProgram {
 	        }
 	    }
 	    currScore.setLabel("Points: " + Integer.toString(scoreVal) + ", Penalties: " + Integer.toString(penaltiesVal));
-	    if (penaltiesVal > 2) {
+	    if (penaltiesVal >= PAR) {
 	    	gameOver();
 	    }
 	}
@@ -161,7 +189,7 @@ public class ClassicMode extends GraphicsProgram {
 }
 
 	private void generateNewFruit() {
-		int fallHeight = (rgen.nextInt(1000,10000)); // Random selection of the coordinates at which each fruit spawns, so that they do not all appear on screen at once.
+		int fallHeight = (rgen.nextInt(1000,12000)); // Random selection of the coordinates at which each fruit spawns, so that they do not all appear on screen at once.
 		int fallWidth = (rgen.nextInt(100,700));
 		//System.out.println(fallHeight);
 		int typeSelector = (rgen.nextInt(0,3));
@@ -198,7 +226,18 @@ public class ClassicMode extends GraphicsProgram {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		//Nothing for now.
+		if (getElementAt(e.getX(), e.getY())==btnBaby) {
+			gameActive=true;
+			startGame(4, 10, 3, "baby");
+		}
+		else if (getElementAt(e.getX(), e.getY())==btnNormal) {
+			gameActive=true;
+			startGame(7, 12, 3, "normal");
+		}
+		else if (getElementAt(e.getX(), e.getY())==btnExtreme) {
+			gameActive=true;
+			startGame(9, 18, 3, "extreme");
+		}
 	}
 	
 	
@@ -295,7 +334,7 @@ public class ClassicMode extends GraphicsProgram {
 	}
 	
 	private boolean fruitBoundaryCheck(GImage ballInstance) {
-		if (ballInstance.getX()>=WINDOW_WIDTH||ballInstance.getY()>=WINDOW_HEIGHT) {
+		if (ballInstance.getX()>=WINDOW_WIDTH-50||ballInstance.getX()<=0||ballInstance.getY()>=WINDOW_HEIGHT) {
 			return false;
 		}
 		else {

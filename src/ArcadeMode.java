@@ -31,7 +31,7 @@ public class ArcadeMode extends GraphicsProgram {
 	public static int WINDAGE = 7; // Determines the strength of wind in the dojo
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits
 	public static int GRAVITY_MULTIPLIER = 12; // Determines the strength of gravity in the dojo
-	
+	 
 	ArrayList<GImage> myBalls = new ArrayList<GImage>();
 	//ArrayList<GOval> trailOfBalls = new ArrayList<GOval>();
 	GLabel currScore = new GLabel("Points: 0", 10, 25);
@@ -242,7 +242,7 @@ public class ArcadeMode extends GraphicsProgram {
 	}
 	
 	private boolean fruitBoundaryCheck(GImage ballInstance) {
-		if (ballInstance.getX()>=WINDOW_WIDTH||ballInstance.getY()>=WINDOW_HEIGHT) {
+		if (ballInstance.getX()>=WINDOW_WIDTH-50||ballInstance.getX()<=0||ballInstance.getY()>=WINDOW_HEIGHT) {
 			return false;
 		}
 		else {
