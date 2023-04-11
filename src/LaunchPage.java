@@ -1,12 +1,16 @@
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import java.awt.image.*;
 
 
 public class LaunchPage implements ActionListener{
@@ -15,7 +19,8 @@ public class LaunchPage implements ActionListener{
 	JButton btnArcade = new JButton("Arcade Mode");
 	JButton btnClassic = new JButton ("Classic Mode"); 
 	String BGMpath = "media/bgm-mainmenu.wav";
-	WAVplayInstance BGMplayer = new WAVplayInstance();
+	WAVplayInstance BGMplayer = new WAVplayInstance();	
+	
 	
 	LaunchPage(){
 
@@ -36,6 +41,7 @@ public class LaunchPage implements ActionListener{
 		frame.setSize(800, 600);
 		frame.setLayout(null);
 		frame.setVisible(true);
+		
 		
 	}
 	
