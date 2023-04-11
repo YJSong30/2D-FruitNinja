@@ -210,7 +210,7 @@ public class ClassicMode extends GraphicsProgram {
 		}
 		else {
 			fruitType = "bomb";
-			typeCode = 100.003;
+			typeCode = 100.003; //Increase bomb hitbox size depending on difficulty?
 		}
 		//End fruit typeCode selector
 		ball = new GImage("../media/whole" + fruitType + ".png", fallWidth, WINDOW_HEIGHT-fallHeight);
