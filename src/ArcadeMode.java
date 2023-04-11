@@ -1,16 +1,21 @@
-import acm.graphics.*;
-import acm.program.*;
-import acm.util.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.*;
-import java.io.*;
+
+import acm.graphics.GImage;
+import acm.graphics.GLabel;
+import acm.graphics.GOval;
+import acm.program.GraphicsProgram;
+import acm.util.RandomGenerator;
 
 /*
  * TODO:
@@ -46,6 +51,7 @@ public class ArcadeMode extends GraphicsProgram {
 	int k = 0;
 	
 	private LaunchPage launchPage;
+	private int timeRemaining = 120;
 	
 	
 	public void run() {
@@ -80,6 +86,11 @@ public class ArcadeMode extends GraphicsProgram {
 		add(currScore);
         addMouseListeners();
         
+    	GLabel timerLabel = new GLabel("Time: " + timeRemaining, 10, 50);
+    	timerLabel.setFont("Gang of three-24");
+    	timerLabel.setColor(Color.RED);
+    	add(timerLabel);
+    	
         new Thread(() -> {
             while (true) {
                 animateAllFruits(GRAVITY_MULTIPLIER);
@@ -90,6 +101,7 @@ public class ArcadeMode extends GraphicsProgram {
         
         
 	}
+	
 	
 	private void animateAllFruits(int gravityMult) {
 	    synchronized (myBalls) {
@@ -169,7 +181,6 @@ public class ArcadeMode extends GraphicsProgram {
 	private void animateFruit(int gravityMult, GImage ballInst) { //modify this function
 		 ballInst.move(xVelocity, gravityMult);
 	}
-	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
