@@ -2,6 +2,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -9,8 +10,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import java.awt.image.*;
 
 
 public class LaunchPage implements ActionListener{
@@ -22,7 +23,7 @@ public class LaunchPage implements ActionListener{
 	WAVplayInstance BGMplayer = new WAVplayInstance();	
 	
 	
-	LaunchPage(){
+	LaunchPage() {
 
 		BGMplayer.playWAV(BGMpath, true);
 		
@@ -42,7 +43,19 @@ public class LaunchPage implements ActionListener{
 		frame.setLayout(null);
 		frame.setVisible(true);
 		
+		JLabel imageLabel = menuImage("media/fruitninjalogo.png"); //doesn't show in the beginning but shows when window is expanded. Fix later
+		imageLabel.setBounds(300, 200, 100, 100);
+		frame.add(imageLabel);
 		
+		
+	}
+	
+	private JLabel menuImage(String imagePath){
+		
+		ImageIcon imageIcon = new ImageIcon(imagePath);
+	    JLabel imageLabel = new JLabel(imageIcon);
+	    return imageLabel;
+	 
 	}
 	
 	class WAVplayInstance {
