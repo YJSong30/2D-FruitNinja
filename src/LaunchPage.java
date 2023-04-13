@@ -23,7 +23,8 @@ public class LaunchPage implements ActionListener{
 	
 	JFrame frame = new JFrame();
 	JButton btnArcade = new JButton("Arcade Mode");
-	JButton btnClassic = new JButton ("Classic Mode"); 
+	JButton btnClassic = new JButton ("Classic Mode");
+	JButton credits = new JButton ("Credits");
 	String BGMpath = "media/bgm-mainmenu.wav";
 	WAVplayInstance BGMplayer = new WAVplayInstance();	
 	
@@ -51,7 +52,11 @@ public class LaunchPage implements ActionListener{
 		btnClassic.setFocusable(false);
 		btnClassic.addActionListener(this);
 		
+		credits.setBounds(300, 480, 200, 40);
+		credits.setFocusable(false);
+		credits.addActionListener(this);
 		
+		frame.add(credits);
 		frame.add(btnArcade);
 		frame.add(btnClassic);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +67,8 @@ public class LaunchPage implements ActionListener{
 		JLabel imageLabel = menuImage("media/fruitninjalogo.png"); //doesn't show in the beginning but shows when window is expanded. Fix later
 		
 		frame.add(imageLabel);
-		imageLabel.setBounds(300, 200, 100, 100);
+		imageLabel.setBounds(290, 180, 100, 100);
+		imageLabel.setSize(200, 200);
 		
 		
 	
@@ -151,6 +157,11 @@ public class LaunchPage implements ActionListener{
 			BGMplayer.stopWAV();
 			frame.dispose();
 			new ClassicMode().start();
+		}
+		
+		else if (e.getSource() == credits) {
+			frame.dispose();
+			//TO DO
 		}
 		
 	}
