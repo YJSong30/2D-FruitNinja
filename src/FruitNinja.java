@@ -106,6 +106,7 @@ public class FruitNinja extends GraphicsProgram {
 	                generateNewFruit(); // Generates a new fruit to ensure that the user never "runs out" of fruits.
 	            }
 	            if (windageBounceCheck(ballInstance)) {
+	            	
 	                xVelocity *= -1;
 	            }
 	        }
