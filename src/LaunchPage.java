@@ -1,3 +1,5 @@
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,9 @@ import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import acm.graphics.GImage;
+import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
 
@@ -26,6 +31,17 @@ public class LaunchPage implements ActionListener{
 	LaunchPage() {
 
 		BGMplayer.playWAV(BGMpath, true);
+		
+		ImagePanel bgPanel = new ImagePanel("media/dojo.jpg");
+		bgPanel.setLayout(null);
+		bgPanel.setSize(frame.getSize());
+		frame.setContentPane(bgPanel);
+		
+		JLabel textLabel;
+		textLabel = new JLabel("Welcome to Fruit Ninja!");
+		textLabel.setBounds(300, 100, 100, 100);
+		textLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+		frame.add(textLabel);
 		
 		btnArcade.setBounds(450, 400, 200, 40);
 		btnArcade.setFocusable(false);
@@ -48,6 +64,34 @@ public class LaunchPage implements ActionListener{
 		frame.add(imageLabel);
 		
 		
+	
+		
+	}
+	
+	class ImagePanel extends JPanel {
+		
+	    private Image image;
+	    public ImagePanel(Image image) {
+	        this.image = image;
+	        
+	    }
+	    
+	    public ImagePanel(String string) {
+			// TODO Auto-generated constructor stub
+	    	try {
+				image = ImageIO.read(new File(string));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+		}
+
+		@Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.drawImage(image, 0, 0, this);
+	    }
 	}
 	
 	private JLabel menuImage(String imagePath){
