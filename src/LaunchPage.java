@@ -38,16 +38,16 @@ public class LaunchPage implements ActionListener{
 		bgPanel.setSize(frame.getSize());
 		frame.setContentPane(bgPanel);
 		
-		JLabel textLabel;
-		textLabel = new JLabel("Welcome to Fruit Ninja!");
-		textLabel.setBounds(300, 100, 100, 100);
-		textLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
-		frame.add(textLabel);
+//		JLabel textLabel;
+//		textLabel = new JLabel("Welcome to Fruit Ninja!");
+//		textLabel.setBounds(300, 100, 100, 100);
+//		textLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
+//		frame.add(textLabel);
 		
 		JLabel ninjaLogo = menuImage("media/ninja-logo.png"); 
 		frame.add(ninjaLogo);
-		ninjaLogo.setBounds(100, 50, 80, 80);
-		ninjaLogo.setSize(100, 50);
+		ninjaLogo.setBounds(100, 50, 800, 225);
+		ninjaLogo.setSize(800, 225);
 		
 		btnArcade.setBounds(450, 400, 200, 40);
 		btnArcade.setFocusable(false);
