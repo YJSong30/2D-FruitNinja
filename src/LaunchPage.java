@@ -44,6 +44,11 @@ public class LaunchPage implements ActionListener{
 		textLabel.setFont(new Font("Verdana", Font.PLAIN, 18));
 		frame.add(textLabel);
 		
+		JLabel ninjaLogo = menuImage("media/ninja-logo.png"); 
+		frame.add(ninjaLogo);
+		ninjaLogo.setBounds(100, 50, 80, 80);
+		ninjaLogo.setSize(100, 50);
+		
 		btnArcade.setBounds(450, 400, 200, 40);
 		btnArcade.setFocusable(false);
 		btnArcade.addActionListener(this);
@@ -64,12 +69,12 @@ public class LaunchPage implements ActionListener{
 		frame.setLayout(null);
 		frame.setVisible(true);
 		
-		JLabel imageLabel = menuImage("media/fruitninjalogo.png"); //doesn't show in the beginning but shows when window is expanded. Fix later
+		JLabel imageLabel = menuImage("media/fruitninjalogo.png"); 
 		frame.add(imageLabel);
 		imageLabel.setBounds(290, 180, 100, 100);
 		imageLabel.setSize(200, 200);
 		
-		
+
 	
 		
 	}
