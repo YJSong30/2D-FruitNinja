@@ -60,8 +60,9 @@ public class LaunchPage implements ActionListener{
 		frame.setVisible(true);
 		
 		JLabel imageLabel = menuImage("media/fruitninjalogo.png"); //doesn't show in the beginning but shows when window is expanded. Fix later
-		imageLabel.setBounds(300, 200, 100, 100);
+		
 		frame.add(imageLabel);
+		imageLabel.setBounds(300, 200, 100, 100);
 		
 		
 	
