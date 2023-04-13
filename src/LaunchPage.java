@@ -46,7 +46,7 @@ public class LaunchPage implements ActionListener{
 		
 		JLabel ninjaLogo = menuImage("media/ninja-logo.png"); 
 		frame.add(ninjaLogo);
-		ninjaLogo.setBounds(100, 50, 800, 225);
+		ninjaLogo.setBounds(100, 50, 80, 80);
 		ninjaLogo.setSize(800, 225);
 		
 		btnArcade.setBounds(450, 400, 200, 40);
