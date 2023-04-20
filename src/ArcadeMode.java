@@ -87,7 +87,7 @@ public class ArcadeMode extends GraphicsProgram {
         addMouseListeners();
         
     	GLabel timerLabel = new GLabel("Time: " + timeRemaining, 350, 30);
-    	timerLabel.setFont("Gang of three-24");
+    	timerLabel.setFont("Gang of three-30");
     	timerLabel.setColor(Color.RED);
     	add(timerLabel);
     	
