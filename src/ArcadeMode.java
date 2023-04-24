@@ -55,7 +55,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	int k = 0;
 	
 	private LaunchPage launchPage;
-	private int timeRemaining = 120;
+	private int timeRemaining = 60;
 	
 	GLabel timerLabel;
 	
