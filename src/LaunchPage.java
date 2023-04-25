@@ -140,7 +140,26 @@ public class LaunchPage implements ActionListener{
         		tempIn.stop();
         	}
         }
-}
+	}
+	
+	private void showCredits() {
+		
+		JFrame credFrame = new JFrame("Credits");
+		credFrame.setSize(800, 600);
+		credFrame.setLayout(null);
+		credFrame.setVisible(true);
+		
+		JLabel credTitle = new JLabel("Credits");
+		credTitle.setBounds(350, 20, 120, 40);
+		credTitle.setFont(new Font("Serif", Font.PLAIN, 20));
+	    credFrame.add(credTitle);
+	    
+	    JLabel credInfo = new JLabel("<html>COMP 055: Application Development Created by: Young, Aden, Moiz</html>");
+	    credInfo.setFont(new Font("Serif", Font.PLAIN, 20));
+	    credInfo.setBounds(10, 30, 350, 200);
+	    credFrame.add(credInfo);
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -155,6 +174,13 @@ public class LaunchPage implements ActionListener{
 			BGMplayer.stopWAV();
 			frame.dispose();
 			new ClassicMode().start();
+		}
+		
+		else if (e.getSource() == credits) {
+			BGMplayer.stopWAV();
+			frame.dispose();
+			showCredits();
+			
 		}
 		
 		else if (e.getSource() == credits) {
