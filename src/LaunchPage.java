@@ -142,6 +142,8 @@ public class LaunchPage implements ActionListener{
         }
 	}
 	
+	//implement leaderboard
+	
 	private void showCredits() {
 		
 		JFrame credFrame = new JFrame("Credits");
@@ -159,6 +161,7 @@ public class LaunchPage implements ActionListener{
 	    credInfo.setBounds(10, 30, 350, 200);
 	    credFrame.add(credInfo);
 		
+	    
 	}
 
 	@Override
