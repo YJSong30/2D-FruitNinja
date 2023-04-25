@@ -2,10 +2,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+//import java.util.Timer;
+import javax.swing.Timer;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -29,7 +33,7 @@ import acm.util.RandomGenerator;
  * etc.
  */
 
-public class ArcadeMode extends GraphicsProgram {
+public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int BREAK_MS = 30;
@@ -51,10 +55,17 @@ public class ArcadeMode extends GraphicsProgram {
 	int k = 0;
 	
 	private LaunchPage launchPage;
-	private int timeRemaining = 120;
+	private int timeRemaining = 60;
+	
+	GLabel timerLabel;
+	
 	
 	
 	public void run() {
+		Timer timer;
+		timer = new Timer(1000, this);
+		timer.setInitialDelay(2000);
+		timer.start();
 		ballBlade.setColor(Color.WHITE);
 		ballBlade.setFilled(true);
 		int i = 0;
@@ -86,7 +97,7 @@ public class ArcadeMode extends GraphicsProgram {
 		add(currScore);
         addMouseListeners();
         
-    	GLabel timerLabel = new GLabel("Time: " + timeRemaining, 350, 30);
+    	timerLabel = new GLabel("Time: " + timeRemaining, 350, 30);
     	timerLabel.setFont("Gang of three-30");
     	timerLabel.setColor(Color.RED);
     	add(timerLabel);
@@ -102,6 +113,10 @@ public class ArcadeMode extends GraphicsProgram {
         
 	}
 	
+	public void actionPerformed(ActionEvent e) {
+		timeRemaining--;
+		timerLabel.setLabel("Time: " + timeRemaining);
+	}
 	
 	private void animateAllFruits(int gravityMult) {
 	    synchronized (myBalls) {
