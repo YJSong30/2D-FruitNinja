@@ -142,7 +142,7 @@ public class LaunchPage implements ActionListener{
         }
 	}
 	
-	//implement leaderboard
+	//implement leader board
 	
 	private void showCredits() {
 		
