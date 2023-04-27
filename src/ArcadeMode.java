@@ -58,7 +58,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	int k = 0;
 	
 	private LaunchPage launchPage;
-	private int timeRemaining = 60;
+	private int timeRemaining = 120;
 	
 	GLabel timerLabel;
 	WAVplayInstance BGMplayer = new WAVplayInstance();
@@ -69,7 +69,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	public void run() {
 		Timer timer;
 		timer = new Timer(1000, this);
-		timer.setInitialDelay(2000);
+		timer.setInitialDelay(1000);
 		timer.start();
 		ballBlade.setColor(Color.WHITE);
 		ballBlade.setFilled(true);
@@ -123,8 +123,10 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (timeRemaining != 0) {
 		timeRemaining--;
 		timerLabel.setLabel("Time: " + timeRemaining);
+		}
 	}
 	
 	private void gameOver() {
