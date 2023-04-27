@@ -175,7 +175,6 @@ public class LaunchPage implements ActionListener{
 		}
 		
 		else if (e.getSource() == credits) {
-			BGMplayer.stopWAV();
 			frame.dispose();
 			showCredits();
 			
