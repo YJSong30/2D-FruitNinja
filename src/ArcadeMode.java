@@ -11,6 +11,8 @@ import java.util.ArrayList;
 //import java.util.Timer;
 import javax.swing.Timer;
 
+//import ArcadeMode.WAVplayInstance;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -47,6 +49,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	int scoreVal = 0;
 	GOval ballBlade = new GOval(0, 0, 20, 20);
 
+	public boolean gameActive = true;
 	
 	private GImage ball;
 	private int xVelocity;
@@ -58,6 +61,8 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	private int timeRemaining = 60;
 	
 	GLabel timerLabel;
+	WAVplayInstance BGMplayer = new WAVplayInstance();
+
 	
 	
 	
@@ -73,7 +78,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 		xVelocity = WINDAGE;
 		
 		String BGMpath = "media/bgm-arcade.wav";
-		WAVplayInstance BGMplayer = new WAVplayInstance();
+		//WAVplayInstance BGMplayer = new WAVplayInstance();
 		
 		BGMplayer.playWAV(BGMpath, true);
 		
@@ -103,10 +108,14 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
     	add(timerLabel);
     	
         new Thread(() -> {
-            while (true) {
+            while (gameActive==true) {
                 animateAllFruits(GRAVITY_MULTIPLIER);
                 remove(ballBlade);
                 pause(BREAK_MS); 
+                if (timeRemaining<=0) {
+                	//gameActive=false;
+                	gameOver();
+                }
             }
         }).start();
         
@@ -117,6 +126,27 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 		timeRemaining--;
 		timerLabel.setLabel("Time: " + timeRemaining);
 	}
+	
+	private void gameOver() {
+        for (int i = myBalls.size() - 2; i >= 0; i--) {
+            GImage ballInstance = myBalls.get(i);
+            remove(ballInstance);
+            myBalls.remove(i); // Remove the current ballInstance by index
+        }
+        Font ninjaFont = new Font("Gang of Three", Font.PLAIN, 44);
+        GLabel lblGameOver = new GLabel("Game over!", WINDOW_HEIGHT/2, WINDOW_WIDTH/3);
+        lblGameOver.setFont(ninjaFont);
+        lblGameOver.setColor(Color.CYAN);//changed  color
+        add(lblGameOver);
+        currScore.setLocation(WINDOW_HEIGHT/2, WINDOW_WIDTH/2.5);
+        BGMplayer.stopWAV();
+        BGMplayer.playWAV("media/gameover.wav", false);
+        gameActive=false;
+        pause(5000);
+        LaunchPage launchPage = new LaunchPage();
+        ArcadeMode.super.gw.dispose();
+	}
+	
 	
 	private void animateAllFruits(int gravityMult) {
 	    synchronized (myBalls) {
@@ -136,12 +166,13 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	}
 
 	class WAVplayInstance {
+		Clip tempIn;
 	        void playWAV(String WAVpath, boolean loopState){
 	                 try {
 	                         File pathString = new File(WAVpath);
 	                          if(pathString.exists()){ 
 	                                  AudioInputStream WAVstream = AudioSystem.getAudioInputStream(pathString);
-	                                  Clip tempIn = AudioSystem.getClip();
+	                                  tempIn = AudioSystem.getClip();
 	                                  tempIn.open(WAVstream);
 	                                  if (loopState==false) {
 	                                	  
@@ -160,6 +191,11 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	                           System.out.println(e);
 	                     }
 	           }
+	        void stopWAV() {
+	        	if (tempIn != null) {
+	        		tempIn.stop();
+	        	}
+	        }
 	}
 
 	private void generateNewFruit() {
