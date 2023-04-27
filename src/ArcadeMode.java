@@ -154,6 +154,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
         lblGameOver.setColor(Color.CYAN);//changed  color
         add(lblGameOver);
         currScore.setLocation(WINDOW_HEIGHT/2, WINDOW_WIDTH/2.5);
+        remove(lblMultiplier);
         BGMplayer.stopWAV();
         BGMplayer.playWAV("media/gameover.wav", false);
         gameActive=false;
