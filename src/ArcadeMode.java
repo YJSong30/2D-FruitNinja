@@ -244,7 +244,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 		int fallWidth = (rgen.nextInt(100,700));
 		System.out.println(fallHeight);
 		bornana = new GImage("../media/wholebornana.png", fallWidth, WINDOW_HEIGHT-fallHeight);
-		bornana.setSize(100, 100.999);
+		bornana.setSize(150, 100.999);
 		add(bornana);
 		myBalls.add(bornana);
 	}
@@ -273,7 +273,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 			//System.out.println("Mouse dragged!");
 			drawBlade(e.getX(), e.getY());
 			if(getElementAt(e.getX(), e.getY()) == instFruit) {
-				if (instFruit.getWidth()==99) {
+				if (instFruit.getWidth()==99||instFruit.getWidth()==149) {
 					
 				}
 				else {
@@ -311,8 +311,8 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 					
 					else if (instFruit.getHeight()==100.999) {
 						instFruit.setImage("../media/slicedbornana.png");
-						instFruit.setSize(99,100.999);
-						scoreVal = scoreVal+1000;
+						instFruit.setSize(149,100.999);
+						scoreVal = scoreVal+100;
 						//timeRemaining = timeRemaining-5;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/bornana.wav", false);
