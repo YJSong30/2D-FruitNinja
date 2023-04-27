@@ -156,6 +156,8 @@ public class LaunchPage implements ActionListener{
 		credits.setLayout(null);
 		credits.setSize(frame.getSize());
 		credFrame.setContentPane(credits);
+		
+		credFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	}
 
@@ -175,6 +177,8 @@ public class LaunchPage implements ActionListener{
 		}
 		
 		else if (e.getSource() == credits) {
+			BGMplayer.stopWAV();
+			BGMplayer.playWAV(BGMpath, true);
 			frame.dispose();
 			showCredits();
 			
