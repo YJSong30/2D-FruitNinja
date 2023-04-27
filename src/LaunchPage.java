@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
@@ -150,17 +151,11 @@ public class LaunchPage implements ActionListener{
 		credFrame.setSize(800, 600);
 		credFrame.setLayout(null);
 		credFrame.setVisible(true);
-		
-		JLabel credTitle = new JLabel("Credits");
-		credTitle.setBounds(350, 20, 120, 40);
-		credTitle.setFont(new Font("Serif", Font.PLAIN, 20));
-	    credFrame.add(credTitle);
-	    
-	    JLabel credInfo = new JLabel("<html>COMP 055: Application Development Created by: Young, Aden, Moiz</html>");
-	    credInfo.setFont(new Font("Serif", Font.PLAIN, 20));
-	    credInfo.setBounds(10, 30, 350, 200);
-	    credFrame.add(credInfo);
-		
+
+		ImagePanel credits = new ImagePanel("media/Credits.png");
+		credits.setLayout(null);
+		credits.setSize(frame.getSize());
+		credFrame.setContentPane(credits);
 	    
 	}
 
@@ -180,7 +175,6 @@ public class LaunchPage implements ActionListener{
 		}
 		
 		else if (e.getSource() == credits) {
-			BGMplayer.stopWAV();
 			frame.dispose();
 			showCredits();
 			
