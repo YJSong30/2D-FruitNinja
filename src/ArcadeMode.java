@@ -41,13 +41,16 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	public static final int BREAK_MS = 30;
 	public static int WINDAGE = 7; // Determines the strength of wind in the dojo
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits
-	public static int NUM_BORNANAS = 30;
+	public static int NUM_BORNANAS = 3;
 	public static int GRAVITY_MULTIPLIER = 12; // Determines the strength of gravity in the dojo
 	 
 	ArrayList<GImage> myBalls = new ArrayList<GImage>();
 	//ArrayList<GOval> trailOfBalls = new ArrayList<GOval>();
 	GLabel currScore = new GLabel("Points: 0", 10, 25);
+	
 	int scoreVal = 0;
+	int scoreMultiplier = 1;
+	GLabel lblMultiplier = new GLabel ("Point multiplier: x" + scoreMultiplier, 10, 50);
 	GOval ballBlade = new GOval(0, 0, 20, 20);
 
 	public boolean gameActive = true;
@@ -106,6 +109,9 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 		currScore.setFont(ninjaFont);
 		currScore.setColor(Color.ORANGE);
 		add(currScore);
+		lblMultiplier.setFont(ninjaFont);
+		lblMultiplier.setColor(Color.ORANGE);
+		add(lblMultiplier);
         addMouseListeners();
         
     	timerLabel = new GLabel("Time: " + timeRemaining, 350, 30);
@@ -118,6 +124,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
                 animateAllFruits(GRAVITY_MULTIPLIER);
                 remove(ballBlade);
                 pause(BREAK_MS); 
+                lblMultiplier.setLabel("Point multiplier: x" + Integer.toString(scoreMultiplier));
                 if (timeRemaining<=0) {
                 	//gameActive=false;
                 	gameOver();
@@ -281,7 +288,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 					if (instFruit.getHeight()==100.000) {
 						instFruit.setImage("../media/slicedwatermelon.png");
 						instFruit.setSize(99,100.000); // By reducing the size of the object by a single pixel, its already-slashed state is stored in a memory-efficient manner without additional variables or an array of fruits.
-						scoreVal = scoreVal+50;
+						scoreVal = scoreVal+(50*scoreMultiplier);
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/slice.wav", false);
 					}
@@ -289,14 +296,14 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 					else if (instFruit.getHeight()==100.001) {
 						instFruit.setImage("../media/slicedcoconut.png");
 						instFruit.setSize(99,100.001);
-						scoreVal = scoreVal+75;
+						scoreVal = scoreVal+(75*scoreMultiplier);
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/slice.wav", false);
 					}
 					else if (instFruit.getHeight()==100.002) {
 						instFruit.setImage("../media/slicedapple.png");
 						instFruit.setSize(99,100.002);
-						scoreVal = scoreVal+75;
+						scoreVal = scoreVal+(75*scoreMultiplier);
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/slice.wav", false);
 					}
@@ -312,10 +319,22 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 					else if (instFruit.getHeight()==100.999) {
 						instFruit.setImage("../media/slicedbornana.png");
 						instFruit.setSize(149,100.999);
-						scoreVal = scoreVal+100;
+						//scoreVal = scoreVal+100;
 						//timeRemaining = timeRemaining-5;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/bornana.wav", false);
+				        new Thread(() -> {
+				        	int tempTime = timeRemaining;
+				            while (timeRemaining>(tempTime-10)) {
+				            	scoreMultiplier = 2;
+				            	System.out.println(tempTime); // DO NOT REMOVE THIS LINE!
+				            	// For reasons beyond my comprehension, continually printing tempTime during the while loop allows the multiplier to update dynamically.
+				            	// THE BORNANA CODE DEPENDS UPON THIS PRINT STATEMENT!
+				                
+				            }
+				            scoreMultiplier = 1;
+				            
+				            }).start();
 					}
 					// End typeCode check
 					
