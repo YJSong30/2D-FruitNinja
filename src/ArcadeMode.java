@@ -41,6 +41,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	public static final int BREAK_MS = 30;
 	public static int WINDAGE = 7; // Determines the strength of wind in the dojo
 	public static int NUM_BALLS = 50; // Determines the starting quantity of fruits
+	public static int NUM_BORNANAS = 30;
 	public static int GRAVITY_MULTIPLIER = 12; // Determines the strength of gravity in the dojo
 	 
 	ArrayList<GImage> myBalls = new ArrayList<GImage>();
@@ -52,6 +53,7 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 	public boolean gameActive = true;
 	
 	private GImage ball;
+	private GImage bornana;
 	private int xVelocity;
 	private RandomGenerator rgen;
 	//ArrayList<GOval> balls;
@@ -87,6 +89,10 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 		
 		for (i=0; i<NUM_BALLS; i++) {
 			generateNewFruit();
+		}
+		
+		for (i=0; i<NUM_BORNANAS; i++) {
+			generateBornana();
 		}
 	
 		
@@ -229,6 +235,18 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 		ball.setSize(100,typeCode);
 		add(ball);
 		myBalls.add(ball);
+		//bornana = new GImage("../media/wholebornana.png", fallWidth, WINDOW_HEIGHT-fallHeight);
+		
+	}
+	
+	private void generateBornana() {
+		int fallHeight = (rgen.nextInt(1000,10000)); // Random selection of the coordinates at which each fruit spawns, so that they do not all appear on screen at once.
+		int fallWidth = (rgen.nextInt(100,700));
+		System.out.println(fallHeight);
+		bornana = new GImage("../media/wholebornana.png", fallWidth, WINDOW_HEIGHT-fallHeight);
+		bornana.setSize(100, 100.999);
+		add(bornana);
+		myBalls.add(bornana);
 	}
 	
 	private void animateFruit(int gravityMult, GImage ballInst) { //modify this function
@@ -289,6 +307,15 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 						timeRemaining = timeRemaining-5;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/bang.wav", false);
+					}
+					
+					else if (instFruit.getHeight()==100.999) {
+						instFruit.setImage("../media/slicedbornana.png");
+						instFruit.setSize(99,100.999);
+						scoreVal = scoreVal+1000;
+						//timeRemaining = timeRemaining-5;
+						WAVplayInstance slicedPlayer = new WAVplayInstance();
+						slicedPlayer.playWAV("media/bornana.wav", false);
 					}
 					// End typeCode check
 					
