@@ -283,7 +283,8 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
 					else if (instFruit.getHeight()==100.003) {
 						instFruit.setImage("../media/kaboom.png");
 						instFruit.setSize(99,100.003);
-						scoreVal = scoreVal-150;
+						//scoreVal = scoreVal-150;
+						timeRemaining = timeRemaining-5;
 						WAVplayInstance slicedPlayer = new WAVplayInstance();
 						slicedPlayer.playWAV("media/bang.wav", false);
 					}
