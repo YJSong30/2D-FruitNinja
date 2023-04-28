@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import acm.graphics.GImage;
+import edu.pacific.comp55.refactor.GButton;
+
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
@@ -23,11 +25,14 @@ import javax.swing.ImageIcon;
 public class LaunchPage implements ActionListener{
 	
 	JFrame frame = new JFrame();
+	JFrame credFrame = new JFrame("Credits");
 	JButton btnArcade = new JButton("Arcade Mode");
 	JButton btnClassic = new JButton ("Classic Mode");
 	JButton credits = new JButton ("Credits");
+	JButton creditBack = new JButton("Back");
 	String BGMpath = "media/bgm-mainmenu.wav";
 	WAVplayInstance BGMplayer = new WAVplayInstance();	
+	
 	
 	
 	LaunchPage() {
@@ -147,7 +152,7 @@ public class LaunchPage implements ActionListener{
 	
 	private void showCredits() {
 		
-		JFrame credFrame = new JFrame("Credits");
+		
 		credFrame.setSize(800, 600);
 		credFrame.setLayout(null);
 		credFrame.setVisible(true);
@@ -159,6 +164,11 @@ public class LaunchPage implements ActionListener{
 		
 		credFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
+		
+		creditBack.setBounds(10, 30, 200, 40);
+		creditBack.setFocusable(false);
+		creditBack.addActionListener(this);
+		credFrame.add(creditBack);
 	}
 
 	@Override
@@ -182,8 +192,10 @@ public class LaunchPage implements ActionListener{
 			
 		}
 		
-		else if (e.getSource() == credits) {
-			frame.dispose();
+		else if (e.getSource() == creditBack) {
+			credFrame.dispose();
+			LaunchPage launchPage = new LaunchPage();
+			
 			//TO DO
 		}
 		
