@@ -15,8 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import acm.graphics.GImage;
-import edu.pacific.comp55.refactor.GButton;
 
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
@@ -74,8 +72,6 @@ public class LaunchPage implements ActionListener{
 		imageLabel.setBounds(290, 180, 100, 100);
 		imageLabel.setSize(200, 200);
 		
-
-	
 		
 	}
 	
@@ -195,6 +191,7 @@ public class LaunchPage implements ActionListener{
 		else if (e.getSource() == creditBack) {
 			credFrame.dispose();
 			LaunchPage launchPage = new LaunchPage();
+			BGMplayer.stopWAV();
 			
 			//TO DO
 		}
