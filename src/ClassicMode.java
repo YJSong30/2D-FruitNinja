@@ -4,6 +4,7 @@ import acm.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.sound.sampled.AudioInputStream;
@@ -18,12 +19,8 @@ import java.io.*;
  * X DONE X Implement bombs X DONE X
  * X DONE X Implement background music X DONE X
  * X DONE X Implement additional sound effects X DONE X
- * - Implement 
  * X DONE X Implement penalties
- * - Improve blade graphics (?)
  * X DONE X Allow additional fruits to be spawned if all existing fruits have been slashed (classic) and/or missed (arcade)
- * - Optimize
- * etc.
  */
 
 public class ClassicMode extends GraphicsProgram {
@@ -256,6 +253,9 @@ public class ClassicMode extends GraphicsProgram {
         currScore.setLocation(WINDOW_HEIGHT/2, WINDOW_WIDTH/2.5);
         BGMplayer.stopWAV();
         BGMplayer.playWAV("media/gameover.wav", false);
+        ClassicLeaderboard.classicScores.add(scoreVal);
+        Collections.sort(ClassicLeaderboard.classicScores);
+        Collections.reverse(ClassicLeaderboard.classicScores);
         gameActive=false;
         pause(5000);
         LaunchPage launchPage = new LaunchPage();

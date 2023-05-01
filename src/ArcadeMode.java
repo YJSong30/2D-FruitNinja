@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+
 //import java.util.Timer;
 import javax.swing.Timer;
 
@@ -29,10 +31,7 @@ import acm.util.RandomGenerator;
  * X DONE X Implement bombs X DONE X
  * X DONE X Implement background music X DONE X
  * X DONE X Implement additional sound effects X DONE X
- * - Improve blade graphics (?)
  * X DONE X Allow additional fruits to be spawned if all existing fruits have been slashed (classic) and/or missed (arcade)
- * - Optimize
- * etc.
  */
 
 public class ArcadeMode extends GraphicsProgram implements ActionListener {
@@ -158,6 +157,9 @@ public class ArcadeMode extends GraphicsProgram implements ActionListener {
         remove(lblMultiplier);
         BGMplayer.stopWAV();
         BGMplayer.playWAV("media/gameover.wav", false);
+        ArcadeLeaderboard.arcadeScores.add(scoreVal);
+        Collections.sort(ArcadeLeaderboard.arcadeScores);
+        Collections.reverse(ArcadeLeaderboard.arcadeScores);
         gameActive=false;
         pause(5000);
         LaunchPage launchPage = new LaunchPage();

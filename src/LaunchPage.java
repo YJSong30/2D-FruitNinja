@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -26,6 +27,8 @@ public class LaunchPage implements ActionListener{
 	JFrame credFrame = new JFrame("Credits");
 	JButton btnArcade = new JButton("Arcade Mode");
 	JButton btnClassic = new JButton ("Classic Mode");
+	JButton btnArcadeLeaderboard = new JButton ("Arcade Leaderboard");
+	JButton btnClassicLeaderboard = new JButton ("Classic Leaderboard");
 	JButton credits = new JButton ("Credits");
 	JButton creditBack = new JButton("Back");
 	String BGMpath = "media/bgm-mainmenu.wav";
@@ -59,9 +62,19 @@ public class LaunchPage implements ActionListener{
 		credits.setFocusable(false);
 		credits.addActionListener(this);
 		
+		btnArcadeLeaderboard.setBounds(45, 40, 200, 40);
+		btnArcadeLeaderboard.setFocusable(false);
+		btnArcadeLeaderboard.addActionListener(this);
+		
+		btnClassicLeaderboard.setBounds(550, 40, 200, 40);
+		btnClassicLeaderboard.setFocusable(false);
+		btnClassicLeaderboard.addActionListener(this);
+		
 		frame.add(credits);
 		frame.add(btnArcade);
 		frame.add(btnClassic);
+		frame.add(btnArcadeLeaderboard);
+		frame.add(btnClassicLeaderboard);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setLayout(null);
@@ -169,7 +182,6 @@ public class LaunchPage implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == btnArcade) {
 			BGMplayer.stopWAV();
 			frame.dispose();
@@ -194,6 +206,24 @@ public class LaunchPage implements ActionListener{
 			BGMplayer.stopWAV();
 			
 			//TO DO
+		}
+		
+		else if (e.getSource() == btnArcadeLeaderboard) {
+			BGMplayer.stopWAV();
+			frame.dispose();
+			ArcadeLeaderboard newArcadeBoard = new ArcadeLeaderboard();
+			Collections.sort(newArcadeBoard.arcadeScores);
+			Collections.reverse(newArcadeBoard.arcadeScores);
+			newArcadeBoard.start();
+		}
+		
+		else if (e.getSource() == btnClassicLeaderboard) {
+			BGMplayer.stopWAV();
+			frame.dispose();
+			ClassicLeaderboard newClassicBoard = new ClassicLeaderboard();
+			Collections.sort(newClassicBoard.classicScores);
+			Collections.reverse(newClassicBoard.classicScores);
+			newClassicBoard.start();
 		}
 		
 	}
